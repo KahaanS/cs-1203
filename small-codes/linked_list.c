@@ -12,9 +12,23 @@ typedef struct list_node node;
 
 void printList(node* head) {
     while (head != NULL) {
-        printf("Value: %d \n", head->val);
+        printf("Node: %d \n", head->val);
         head = head->next;
     }
+}
+
+void reverseList(node** head) {
+    node* currnode = *head;
+    node* nextnode = NULL;
+    node* prevnode = NULL;
+    while (currnode != NULL) {
+        nextnode = currnode->next;
+        currnode->next = prevnode;
+        prevnode = currnode;
+        currnode = nextnode;
+    }
+
+    *head = prevnode;
 }
 
 
@@ -48,6 +62,10 @@ int main() {
 
     }
 
+    printList(head);
+    node** head_pointer = &head;
+    
+    reverseList(head_pointer);
     printList(head);
 
     return 0;
