@@ -175,8 +175,8 @@ doublenode* getDoubleNode(doublenode* head, int pos) {
 }
 
 //Delete node from doubly linked list
-void delDoubleNode(node** head, int pos) {
-    doublenode* delnode = getNode(*head, pos);
+void delDoubleNode(doublenode** head, int pos) {
+    doublenode* delnode = getDoubleNode(*head, pos);
     if (pos==0) {
         delnode->next->prev = NULL;
         *head = delnode->next;
@@ -191,16 +191,13 @@ void delDoubleNode(node** head, int pos) {
 
 int main() {
 
-    //Get head of linked list
+    /*
     node* head = malloc(sizeof(node));
     node** head_pointer = &head;
 
     createListNegative(head_pointer);
     printList(head);
-
     
-    
-    /*
     printf("\n");
 
     reverseList(head_pointer);
@@ -231,7 +228,18 @@ int main() {
 
     node* rec = getNode(head, 1);
     printf("Val: %d \n", rec->val);
+    
+
+   doublenode* doublehead = malloc(sizeof(doublenode));
+   doublenode** dh_p = &doublehead;
+
+   createDoubleListNegative(dh_p);
+   printDoubleList(doublehead);
+   delDoubleNode(dh_p, 1);
+   printDoubleList(doublehead);
     */
+
+   
 
     return 0;
 }
