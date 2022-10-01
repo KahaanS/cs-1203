@@ -25,16 +25,28 @@ int main() {
     
     //Create list till negative value is entered
     int n;
-    node* curr = head;
+    node* curr = NULL;
+    node* nextnode = NULL;
    
     while (1) {
         printf("Enter a value \n");
         scanf("%d", &n);
         if(n<0) break;
 
-        curr
+        if (curr == NULL) {
+            curr = head;
+            curr->val = n;
+            curr->next = NULL;
+        } else {
+        nextnode = malloc(sizeof(node));
+
+        nextnode->val = n;
+        nextnode->next = NULL;
+        curr->next = nextnode;
+        curr = curr->next;
+        }
+
     }
-    curr->next = NULL;
 
     printList(head);
 
