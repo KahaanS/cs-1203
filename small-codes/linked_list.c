@@ -9,6 +9,7 @@ struct list_node {
 
 typedef struct list_node node;
 
+//Create doubly linked list data type
 struct double_list_node {
     int val;
     struct double_list_node* next;
@@ -106,6 +107,7 @@ void createDoubleListNegative(doublenode **head) {
     }
 }
 
+//Print doubly linked list
 void printDoubleList(doublenode* head) {
     while (head != NULL) {
         printf("Node: %d \n", head->val);
@@ -113,6 +115,7 @@ void printDoubleList(doublenode* head) {
     }
 }
 
+//Reverse a doubly linked list
 void revDoubleList(doublenode** head) {
     doublenode* curr = *head;
     doublenode* next = NULL;
@@ -131,6 +134,60 @@ void revDoubleList(doublenode** head) {
     *head = prev;
 }
 
+//Get a node from a list
+node* getNode(node* head, int pos) {
+    node* getnode = head;
+    for(int i=0; i<pos; i++) {
+        getnode = getnode->next;
+        if (getnode==NULL) {
+            return NULL;
+        }
+    }
+
+    return getnode;
+}
+
+//Delete a node from a list
+void delNode(node** head, int pos) {
+    node* delnode = getNode(*head, pos);
+
+    if (pos==0) {
+        *head = delnode->next;
+        free(delnode);
+    } else {
+        node* prevnode = getNode(*head, pos-1);
+        prevnode->next = delnode->next;
+        free(delnode);
+    }
+}
+
+//Get node from doubly linked list
+doublenode* getDoubleNode(doublenode* head, int pos) {
+    doublenode* getnode = head;
+    for(int i=0; i<pos; i++) {
+        getnode = getnode->next;
+        if (getnode == NULL) {
+            return NULL;
+        }
+    }
+
+    return getnode;
+}
+
+//Delete node from doubly linked list
+void delDoubleNode(node** head, int pos) {
+    doublenode* delnode = getNode(*head, pos);
+    if (pos==0) {
+        delnode->next->prev = NULL;
+        *head = delnode->next;
+        free(delnode);
+    } else {
+        delnode->prev->next = delnode->next;
+        delnode->next->prev = delnode->prev;
+        free(delnode);
+    }
+}
+
 
 int main() {
 
@@ -140,8 +197,10 @@ int main() {
 
     createListNegative(head_pointer);
     printList(head);
-    
 
+    
+    
+    /*
     printf("\n");
 
     reverseList(head_pointer);
@@ -167,6 +226,12 @@ int main() {
     revDoubleList(dh_pointer);
     printDoubleList(doublehead);
 
+    delNode(head_pointer, 1);
+    printList(head);
+
+    node* rec = getNode(head, 1);
+    printf("Val: %d \n", rec->val);
+    */
 
     return 0;
 }
