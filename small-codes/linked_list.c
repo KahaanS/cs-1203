@@ -31,6 +31,16 @@ void reverseList(node** head) {
     *head = prevnode;
 }
 
+void printHalfList(node* head) {
+    node* turt = head;
+    node* rab = head;
+    while(rab != NULL) {
+        printf("Node: %d \n", turt->val);
+        turt = turt->next;
+        rab = (rab->next) ? rab->next->next : NULL;
+    }
+}
+
 
 int main() {
 
@@ -64,9 +74,15 @@ int main() {
 
     printList(head);
     node** head_pointer = &head;
-    
+
+    printf("\n");
+
     reverseList(head_pointer);
     printList(head);
+
+    printf("\n");
+
+    printHalfList(head);
 
     return 0;
 }
