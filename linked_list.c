@@ -188,6 +188,7 @@ void delDoubleNode(doublenode** head, int pos) {
     }
 }
 
+//Add node to front of list
 void addNodeHead(node** head, int val) {
     node* newnode = malloc(sizeof(node));
     newnode->val = val;
@@ -195,6 +196,7 @@ void addNodeHead(node** head, int val) {
     *head = newnode;
 }
 
+//Add node to front of doubly linked list
 void addNodeDoubleHead(doublenode** head, int val) {
     doublenode* newnode = malloc(sizeof(doublenode));
     newnode->val = val;
