@@ -188,6 +188,22 @@ void delDoubleNode(doublenode** head, int pos) {
     }
 }
 
+void addNodeHead(node** head, int val) {
+    node* newnode = malloc(sizeof(node));
+    newnode->val = val;
+    newnode->next = *head;
+    *head = newnode;
+}
+
+void addNodeDoubleHead(doublenode** head, int val) {
+    doublenode* newnode = malloc(sizeof(doublenode));
+    newnode->val = val;
+    newnode->next = *head;
+    newnode->prev = NULL;
+    newnode->next->prev = newnode;
+    *head = newnode;
+}
+
 
 int main() {
 
