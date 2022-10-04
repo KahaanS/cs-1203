@@ -52,7 +52,7 @@ void printHalfList(node* head) {
 }
 
 //Create linked list from values until negative value is inputted
-void createListNegative(node** head) {
+void createListNegative(node* head) {
     int n;
     node* curr = NULL;
     node* nextnode = NULL;
@@ -63,7 +63,7 @@ void createListNegative(node** head) {
         if(n<0) break;
 
         if (curr == NULL) {
-            curr = *head;
+            curr = head;
             curr->val = n;
             curr->next = NULL;
         } else {
@@ -79,7 +79,7 @@ void createListNegative(node** head) {
 }
 
 //Create doubly linked lsit from values until negative value is inputted
-void createDoubleListNegative(doublenode **head) {
+void createDoubleListNegative(doublenode* head) {
     int n;
     doublenode* curr = NULL;
     doublenode* next = NULL;
@@ -90,7 +90,7 @@ void createDoubleListNegative(doublenode **head) {
         if(n<0) break;
 
         if (curr==NULL) {
-            curr = *head;
+            curr = head;
             curr->val = n;
             curr->prev = NULL;
             curr->next = NULL;
@@ -206,8 +206,97 @@ void addNodeDoubleHead(doublenode** head, int val) {
     *head = newnode;
 }
 
+//Return length of list
+int listLength(node* head) {
+    int len = 0;
+    for (node* c = head; c!=NULL; c = c->next) {
+        len++;
+    }
 
-int main() {
+    return len;
+}
+
+//Return length of doubly linked list
+int doubleListLength(doublenode* head) {
+    int len = 0;
+    for (doublenode* c = head; c!=NULL; c = c->next) {
+        len++;
+    }
+
+    return len;
+}
+
+//Free linked list
+void freeList(node* head) {
+    node* prev;
+    while (head) {
+        prev = head;
+        head = head->next;
+        free(prev);
+    }
+}
+
+//Free doubly linked list
+void freeDoubleList(doublenode* head) {
+    doublenode* prev;
+    while(head) {
+        prev = head;
+        head = head->next;
+        free(prev);
+    }
+}
+
+//List from array
+node* listFromArray(int* a, int n) {
+    node* head = NULL;
+    node* temp = NULL;
+
+    if(n>0) {
+        head = malloc(sizeof(node));
+        head->val = a[0];
+        head->next = NULL;
+        temp=head;
+
+        for(int i=1; i<n; i++) {
+            temp->next = malloc(sizeof(node));
+            temp = temp->next;
+            temp->val = a[i];
+            temp->next = NULL;
+
+        }
+    }
+
+    return head;
+}
+
+//Double list from array
+doublenode* listFromArray(int* a, int n) {
+    doublenode* head = NULL;
+    doublenode* temp = NULL;
+
+    if(n>0) {
+        head = malloc(sizeof(doublenode));
+        head->val = a[0];
+        head->next = NULL;
+        head->prev = NULL;
+        temp=head;
+
+        for(int i=1; i<n; i++) {
+            temp->next = malloc(sizeof(doublenode));
+            temp->next->prev = temp;
+            temp = temp->next;
+            temp->val = a[i];
+            temp->next = NULL;
+
+        }
+    }
+
+    return head;
+}
+
+
+
+int main(int argc, char **argv) {
 
     /*
     node* head = malloc(sizeof(node));
@@ -257,7 +346,13 @@ int main() {
    printDoubleList(doublehead);
     */
 
+   node* head = malloc(sizeof(node));
+   //node** hp = &head;
+   createListNegative(head);
+   int len = listLength(head);
+   printList(head);
+   printf("Length: %d \n", len);
+   freeList(head);
    
-
-    return 0;
+   return 0;
 }
