@@ -23,12 +23,14 @@ void printArray(int* arr, int size) {
     
 }
 
+//Swap 2 elements in an array
 void swap(int* num1, int* num2) {
     int temp = *num1;
     *num1 = *num2;
     *num2 = temp;
 }
 
+//Code for bubble sort
 void bubbleSort(int* arr, int size) {
     for (int done = 0; done < size; done++) {
         for (int i = 0; i<size-done-1; i++) {
@@ -37,6 +39,7 @@ void bubbleSort(int* arr, int size) {
     }
 }
 
+//Find the index of the maximum element in an array upto a certain element
 int findMaxIndex(int* arr, int upto) {
     int maxval = arr[0];
     int maxind = 0;
@@ -47,6 +50,7 @@ int findMaxIndex(int* arr, int upto) {
     return maxind;
 }
 
+//Code for selection sort
 void selectionSort(int* arr, int size) {
     int maxind;
     for (int i = size-1; i > 0; i--) {
