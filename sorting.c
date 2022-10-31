@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 //Create an array of given length with random numbers
 int* createRandomArray(int size) {
     if (size<1) {return NULL;}
     
     int* arr = malloc(size*sizeof(int));
+    srand(time(NULL));
     for (int i = 0; i < size; i++) {
         arr[i] = rand()%1000;
     }
@@ -60,11 +62,41 @@ void selectionSort(int* arr, int size) {
 }
 
 
+//Code for parition
+int partition(int* arr, int lowIndex, int highIndex) {
+    srand(time(NULL));
+    int randIndex = rand()%(highIndex + 1 - lowIndex) + lowIndex;
+    swap(&arr[randIndex], &arr[highIndex]);
+
+    int pivot = arr[highIndex];
+    int greaterIndex = lowIndex-1;
+
+    for (int curr = lowIndex; curr<highIndex; curr++) {
+        if (arr[curr]<=pivot) {
+            greaterIndex++;
+            swap(&arr[greaterIndex], &arr[curr]);
+        }
+    }
+
+    swap(&arr[greaterIndex+1], &arr[highIndex]);
+    return greaterIndex+1;
+}
+
+//Code for quick sort
+void quickSort(int* arr, int lowIndex, int highIndex) {
+    if (lowIndex < highIndex) {
+        int partIndex = partition(arr, lowIndex, highIndex);
+        quickSort(arr, partIndex+1, highIndex);
+        quickSort(arr, lowIndex, partIndex-1);
+    }
+}
+
+
 int main(int argc, char** argv) {
 
     int* myarr = createRandomArray(7);
     printArray(myarr, 7);
-    selectionSort(myarr, 7);
+    quickSort(myarr, 0, 6);
     printArray(myarr, 7);
 
     return 0;
