@@ -270,7 +270,7 @@ node* listFromArray(int* a, int n) {
 }
 
 //Double list from array
-doublenode* listFromArray(int* a, int n) {
+doublenode* doubleListFromArray(int* a, int n) {
     doublenode* head = NULL;
     doublenode* temp = NULL;
 
@@ -292,6 +292,31 @@ doublenode* listFromArray(int* a, int n) {
     }
 
     return head;
+}
+
+//Selection sort
+void selectionSort(node* head) {
+    if(!head) {
+        return;
+    }
+
+    node* minAdd = head;
+    int min = head->val;
+    node* currAdd = head->next;
+    while (currAdd) {
+        if (currAdd->val <= min) {
+            minAdd = currAdd;
+            min = currAdd->val;
+        }
+        currAdd = currAdd->next;
+    }
+
+    int temp = head->val;
+    head->val = min;
+    minAdd->val = temp;
+
+    selectionSort(head->next);
+    
 }
 
 
@@ -352,6 +377,8 @@ int main(int argc, char **argv) {
    int len = listLength(head);
    printList(head);
    printf("Length: %d \n", len);
+   selectionSort(head);
+   printList(head);
    freeList(head);
    
    return 0;
