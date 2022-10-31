@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 //Create tree node
 struct treeNode {
@@ -78,6 +79,7 @@ node* treeFromArray(int* array, int len) {
 
 //Create an array of random numbers
 int* createRandomArray(int size) {
+    srand(time(NULL));
     if (size<1) {return NULL;}
     
     int* arr = malloc(size*sizeof(int));
