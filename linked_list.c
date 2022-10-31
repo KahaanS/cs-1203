@@ -319,6 +319,32 @@ void selectionSort(node* head) {
     
 }
 
+//Insertion sort
+void insertionSort(node** head) {
+    node* sortedHead = NULL;
+    node* current = *head;
+
+    while(current) {
+        node* nextnode = current->next;
+        if (sortedHead == NULL || current->val <= sortedHead->val) {
+            current->next = sortedHead;
+            sortedHead = current;
+        } else {
+            node* searching = sortedHead;
+            while(searching->next != NULL && searching->next->val < current->val) {
+                searching = searching->next;
+            }
+
+            current->next = searching->next;
+            searching->next = current;
+        }
+
+        current = nextnode;
+    }
+
+    *head = sortedHead;
+}
+
 
 
 int main(int argc, char **argv) {
@@ -377,7 +403,7 @@ int main(int argc, char **argv) {
    int len = listLength(head);
    printList(head);
    printf("Length: %d \n", len);
-   selectionSort(head);
+   insertionSort(&head);
    printList(head);
    freeList(head);
    
