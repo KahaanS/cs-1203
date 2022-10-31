@@ -61,6 +61,20 @@ void selectionSort(int* arr, int size) {
     }
 }
 
+//Code for insertion sort
+void insertionSort(int* arr, int size) {
+    for (int curr = 1; curr<size; curr++) {
+        int key = arr[curr];
+        int lesserIndex = curr-1;
+        while(key<arr[lesserIndex] && lesserIndex>=0) {
+            arr[lesserIndex+1] = arr[lesserIndex];
+            lesserIndex--;
+        }
+
+        arr[lesserIndex+1] = key;
+    }
+}
+
 
 //Code for parition
 int partition(int* arr, int lowIndex, int highIndex) {
@@ -96,7 +110,7 @@ int main(int argc, char** argv) {
 
     int* myarr = createRandomArray(7);
     printArray(myarr, 7);
-    quickSort(myarr, 0, 6);
+    insertionSort(myarr, 7);
     printArray(myarr, 7);
 
     return 0;
