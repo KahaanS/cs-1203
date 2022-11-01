@@ -345,6 +345,57 @@ void insertionSort(node** head) {
     *head = sortedHead;
 }
 
+//Get last node
+node* lastNode(node* head) {
+    node* searcher = head;
+    while (searcher && searcher->next) {
+        searcher = searcher->next;
+    }
+
+    return searcher;
+}
+
+//Partition
+node* partition(node* head, node* tail) {
+    node* pivot = head;
+    node* current = head;
+    node* sorted = head;
+    int temp;
+    while (current && current != tail) {
+        if (current->val < tail->val) {
+            pivot = sorted;
+            temp = sorted->val;
+            sorted->val = current->val;
+            current->val = temp;
+
+            sorted = sorted->next;
+        }
+
+        current = current->next;
+    }
+
+    temp = sorted->val;
+    sorted->val = tail->val;
+    tail->val = temp;
+
+    return pivot;
+}
+
+//Quick sort
+void quickSort(node* head, node* tail) {
+    if (head != tail) {
+        node* pivot = partition(head, tail);
+        
+        if (pivot && pivot->next != NULL) {
+            quickSort(pivot->next, tail);
+        }
+
+        if (pivot && pivot != head) {
+            quickSort(head, pivot);
+        }
+    }
+}
+
 
 
 int main(int argc, char **argv) {
@@ -403,7 +454,7 @@ int main(int argc, char **argv) {
    int len = listLength(head);
    printList(head);
    printf("Length: %d \n", len);
-   insertionSort(&head);
+   quickSort(head, lastNode(head));
    printList(head);
    freeList(head);
    
