@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+//Create an array of given length with random numbers
+int* createRandomArray(int size) {
+    if (size<1) {return NULL;}
+    
+    int* arr = malloc(size*sizeof(int));
+    srand(time(NULL));
+    for (int i = 0; i < size; i++) {
+        arr[i] = rand()%1000;
+    }
+
+    return arr;
+}
+
+//Print array
+void printArray(int* arr, int size) {
+    if (size>0) {printf("Array: %d",arr[0]);}
+    for (int i = 1; i < size; i++) {
+        printf(", %d", arr[i]);
+    }
+    printf(". \n");
+    
+}
+
+//Swap 2 elements in an array
+void swap(int* num1, int* num2) {
+    int temp = *num1;
+    *num1 = *num2;
+    *num2 = temp;
+}
+
+//Heapify bottom up (min heap)
+void heapyifyBottomUp(int* arr, int len, int rootIndex) {
+    int minIndex = rootIndex;
+    int leftIndex = rootIndex*2+1;
+    int rightIndex = rootIndex*2+2;
+
+    if (leftIndex<len && arr[leftIndex]<arr[minIndex]) {
+        minIndex = leftIndex;
+    }
+
+    if (rightIndex<len && arr[rightIndex]<arr[minIndex]) {
+        minIndex = rightIndex;
+    }
+
+    if (minIndex != rootIndex) {
+        swap(&arr[rootIndex], &arr[minIndex]);
+        heapyifyBottomUp(arr, len, minIndex);
+    }
+}
+
+void buildHeap(int* arr, int len) {
+    int lastLeafIndex = (len/2)-1;
+    for (int i = lastLeafIndex; i>=0; i--) {
+        heapyifyBottomUp(arr, len, i);
+    }
+}
+
+int extract_min(int* arr, int len) {
+    swap(&arr[0], &arr[len-1]);
+    int min = arr[len-1];
+    arr = realloc(arr, sizeof(int)*(len-1));
+    buildHeap(arr, len-1);
+    return min;
+}
+
+int main(int argc, char** argv) {
+
+    int* myarr = createRandomArray(10);
+    printArray(myarr, 10);
+    buildHeap(myarr, 10);
+    printArray(myarr, 10);
+    int min = extract_min(myarr, 10);
+    min++;
+    printArray(myarr, 9);
+    
+    return 0;
+}
