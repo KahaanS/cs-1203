@@ -59,23 +59,38 @@ void buildHeap(int* arr, int len) {
     }
 }
 
-int extract_min(int* arr, int len) {
-    swap(&arr[0], &arr[len-1]);
-    int min = arr[len-1];
-    arr = realloc(arr, sizeof(int)*(len-1));
-    buildHeap(arr, len-1);
+int extract_min(int* arr, int* len) {
+    swap(&arr[0], &arr[*len-1]);
+    int min = arr[*len-1];
+    buildHeap(arr, *len-1);
+    *len = *len-1;
     return min;
+}
+
+int* insert(int* arr, int* len, int num) {
+    int* newarr = realloc(arr, sizeof(int)*(*len+1));
+    newarr[*len] = num;
+    buildHeap(newarr, *len+1);
+    *len=*len+1;
+    return newarr;
 }
 
 int main(int argc, char** argv) {
 
-    int* myarr = createRandomArray(10);
-    printArray(myarr, 10);
-    buildHeap(myarr, 10);
-    printArray(myarr, 10);
-    int min = extract_min(myarr, 10);
+    int len=10;
+
+    int* myarr = createRandomArray(len);
+    printArray(myarr, len);
+    buildHeap(myarr, len);
+    printArray(myarr, len);
+    int min = extract_min(myarr, &len);
     min++;
-    printArray(myarr, 9);
+    printArray(myarr, len);
+    min = extract_min(myarr, &len);
+    min++;
+    printArray(myarr, len);
+    myarr = insert(myarr, &len, 200);
+    printArray(myarr, len);
     
     return 0;
 }
