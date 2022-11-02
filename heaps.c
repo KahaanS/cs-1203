@@ -32,8 +32,8 @@ void swap(int* num1, int* num2) {
     *num2 = temp;
 }
 
-//Heapify bottom up (min heap)
-void heapyifyBottomUp(int* arr, int len, int rootIndex) {
+//Heapify
+void heapify(int* arr, int len, int rootIndex) {
     int minIndex = rootIndex;
     int leftIndex = rootIndex*2+1;
     int rightIndex = rootIndex*2+2;
@@ -48,21 +48,21 @@ void heapyifyBottomUp(int* arr, int len, int rootIndex) {
 
     if (minIndex != rootIndex) {
         swap(&arr[rootIndex], &arr[minIndex]);
-        heapyifyBottomUp(arr, len, minIndex);
+        heapify(arr, len, minIndex);
     }
 }
 
 void buildHeap(int* arr, int len) {
     int lastLeafIndex = (len/2)-1;
     for (int i = lastLeafIndex; i>=0; i--) {
-        heapyifyBottomUp(arr, len, i);
+        heapify(arr, len, i);
     }
 }
 
 int extract_min(int* arr, int* len) {
     swap(&arr[0], &arr[*len-1]);
     int min = arr[*len-1];
-    buildHeap(arr, *len-1);
+    heapify(arr, *len-1, 0);
     *len = *len-1;
     return min;
 }
