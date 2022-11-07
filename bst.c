@@ -90,13 +90,55 @@ int* createRandomArray(int size) {
     return arr;
 }
 
+node* findMinNode(node* root) {
+    node* current=root;
+    if (!(current->left)) {
+        return current;
+    } else {
+        return findMinNode(current->left);
+    }
+}
+
+node* delete(node* root, int val) {
+    if (!root) {
+        return root;
+    } else if (val > root->val) {
+        root->right = delete(root->right, val);
+    } else if (val < root->val) {
+        root->left = delete(root->left, val);
+    } else {
+        node* temp = NULL;
+        if (!(root->left) && !(root->right)) {
+            free(root);
+            return temp;
+        } else if (!(root->left)) {
+            temp = root->right;
+            free(root);
+            return temp;
+        } else if (!(root->right)) {
+            temp = root->left;
+            free(root);
+            return temp;
+        } else {
+            node* succ = findMinNode(root);
+            root->val = succ->val;
+            free(succ);
+        }
+    }
+
+    return root;
+}
+
 int main(int argc, char** argv) {
 
     int* myarr = createRandomArray(7);
     node* root = treeFromArray(myarr, 7);
     inorder(root);
     printf("\n");
-    root = insert(root, 500);
+    root = insert(root, 190);
+    inorder(root);
+    printf("\n");
+    root = delete(root, 190);
     inorder(root);
 
     return 0;
