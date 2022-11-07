@@ -27,7 +27,6 @@ int getHeight(node* root) {
     if (!root) {
         return 0;
     }
-
     return root->height;
 }
 
@@ -46,6 +45,14 @@ int getMax(int a, int b) {
     }
 }
 
+node* findMinNode(node* root) {
+    node* current=root;
+    if (!(current->left)) {
+        return current;
+    } else {
+        return findMinNode(current->left);
+    }
+}
 
 //Left rotate
 node* leftRotate(node* root) {
@@ -127,6 +134,68 @@ node* insertSimple(node* root, int val) {
     return root;
 }
 
+node* delete(node* root, int val) {
+    if (!root) {
+        return root;
+    } else if (val > root->val) {
+        root->right = delete(root->right, val);
+    } else if (val < root->val) {
+        root->left = delete(root->left, val);
+    } else {
+        node* temp = NULL;
+        if (!(root->left) && !(root->right)) {
+            free(root);
+            return temp;
+        } else if (!(root->left)) {
+            temp = root->right;
+            free(root);
+            return temp;
+        } else if (!(root->right)) {
+            temp = root->left;
+            free(root);
+            return temp;
+        } else {
+            node* succ = findMinNode(root);
+            root->val = succ->val;
+            free(succ);
+        }
+    }
+
+    root->height = getMax(getHeight(root->left), getHeight(root->right))+1;
+
+    return makeBalanced(root);
+}
+
+node* deleteSimple(node* root, int val) {
+    if (!root) {
+        return root;
+    } else if (val > root->val) {
+        root->right = delete(root->right, val);
+    } else if (val < root->val) {
+        root->left = delete(root->left, val);
+    } else {
+        node* temp = NULL;
+        if (!(root->left) && !(root->right)) {
+            free(root);
+            return temp;
+        } else if (!(root->left)) {
+            temp = root->right;
+            free(root);
+            return temp;
+        } else if (!(root->right)) {
+            temp = root->left;
+            free(root);
+            return temp;
+        } else {
+            node* succ = findMinNode(root);
+            root->val = succ->val;
+            free(succ);
+        }
+    }
+
+    return root;
+}
+
 //Search tree for a value
 node* search(node* root, int val) {
     if (root == NULL) {
@@ -204,9 +273,11 @@ int main(int argc, char** argv) {
     node* simpleroot = simpleTreeFromArray(myarr,20);
     node* root = treeFromArray(myarr, 20);
     inorder(simpleroot);
+    
     printf("\n");
     inorder(root);
     printf("\n");
+    
     root = insert(root, 500);
     root = insert(root, 700);
     root = insert(root, 800);
@@ -215,9 +286,19 @@ int main(int argc, char** argv) {
     simpleroot = insertSimple(simpleroot, 700);
     simpleroot = insertSimple(simpleroot, 800);
     simpleroot = insertSimple(simpleroot, 900);
+   
     inorder(simpleroot);
     printf("\n");
     inorder(root);
+    printf("\n");
+
+    root = delete(root, 500);
+    simpleroot = deleteSimple(simpleroot, 500);
+
+    inorder(simpleroot);
+    printf("\n");
+    inorder(root);
+
 
     return 0;
 }
