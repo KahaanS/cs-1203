@@ -75,6 +75,12 @@ int* insert(int* arr, int* len, int num) {
     return newarr;
 }
 
+void heapSort(int* heap, int len) {
+    while(len>0) {
+        extract_min(heap, &len);
+    }
+}
+
 int main(int argc, char** argv) {
 
     int len=10;
@@ -90,6 +96,8 @@ int main(int argc, char** argv) {
     min++;
     printArray(myarr, len);
     myarr = insert(myarr, &len, 200);
+    printArray(myarr, len);
+    heapSort(myarr, len);
     printArray(myarr, len);
     
     return 0;
