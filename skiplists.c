@@ -21,48 +21,37 @@ node* initListNode(int val) {
 
 void insertNode(node* head, int val) {
     node* curr=head;
-    int firstctr = 0;
-    int secondctr = 0;
+    int ctr = 0;
     node* lastfirst = head;
     node* lastsecond = head;
 
     while(curr->nextarr[0] != NULL) {
 
         curr = curr->nextarr[0];
-        firstctr++;
-        secondctr++;
+        ctr++;
 
-        if(firstctr%5 == 0) {
+        if(ctr%5 == 0) {
             lastfirst = curr;
         }
 
-        if(secondctr%10 == 0) {
+        if(ctr%10 == 0) {
             lastsecond = curr;
         }
-    }
-    
-    printf("%d, %d\n", val, curr->val);
-    if(firstctr>=1) {
-    printf("Head next: %d \n", head->nextarr[0]->val);
     }
 
     node* newnode = initListNode(val);
     curr->nextarr[0] = newnode;
 
-    
-    if((firstctr+1)%5 == 0){
+    printf("Pointer: %p, %d \n", lastfirst->nextarr[0], lastfirst->nextarr[0]->val);
+    int oldval = lastfirst->nextarr[0]->val;
+
+    if((ctr+1)%5==0) {
+        printf("Not Changed here : %p, %d \n", lastfirst->nextarr[0], lastfirst->nextarr[0]->val);
         lastfirst->nextarr[1] = newnode;
+        printf("Changed here : %p, %d \n", lastfirst->nextarr[0], lastfirst->nextarr[0]->val);
     }
 
-    if(firstctr>=1) {
-    printf("Head next: %d \n", head->nextarr[0]->val);
-    }
-
-     if((secondctr+1)%5 == 0){
-        lastsecond->nextarr[2] = newnode;
-    }
-
-     
+    //lastfirst->nextarr[0]->val = oldval;
 
 }
 
@@ -90,20 +79,16 @@ int main() {
     insertNode(head, 4);
     insertNode(head, 5);
     insertNode(head, 6);
-    /*
-    insertNode(head, 4);
-    insertNode(head, 5);
-    insertNode(head, 6);
     insertNode(head, 7);
     insertNode(head, 8);
-    insertNode(head, 8);
+    insertNode(head, 9);
     insertNode(head, 10);
-    */
-    printListLevels(head);
-    
+    insertNode(head, 11);
+
+    printListLevels(head);    
 
 
-    return 1;
+    return 0;
 }
 
 
